@@ -1,0 +1,6 @@
+{
+  "name": "VANTAGE",
+  "description": "An original, realistic open-world urban sandbox featuring procedural architecture, articulated traffic and pedestrian AI, and an ECS simulation engine.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,100 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Publicly minimal player profile metadata owned by an authenticated user.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Firebase Auth UID of the profile owner."
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "description": "Display name shown in the simulation settings drawer."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last-update timestamp."
+        }
+      },
+      "required": ["uid", "displayName", "createdAt", "updatedAt"]
+    },
+    "WorldSave": {
+      "title": "WorldSave",
+      "description": "Saved VANTAGE simulation preset including weather, traffic density, and lighting state.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "UID of the user who owns this save preset."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "description": "Preset display title."
+        },
+        "weatherState": {
+          "type": "string",
+          "enum": ["CLEAR", "OVERCAST", "RAIN", "FOG", "SNOW"],
+          "description": "Active or preferred weather condition."
+        },
+        "autoWeather": {
+          "type": "boolean",
+          "description": "Whether procedural weather transitions are enabled."
+        },
+        "trafficDensity": {
+          "type": "number",
+          "description": "Target AI vehicle count."
+        },
+        "pedestrianDensity": {
+          "type": "number",
+          "description": "Target AI pedestrian count."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp."
+        }
+      },
+      "required": [
+        "ownerId",
+        "name",
+        "weatherState",
+        "autoWeather",
+        "trafficDensity",
+        "pedestrianDensity",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Owner-only user profile document."
+    },
+    "/users/{userId}/worldSaves/{saveId}": {
+      "schema": { "$ref": "#/entities/WorldSave" },
+      "description": "Owner-only simulation presets and saved world configurations."
+    }
+  }
+}
